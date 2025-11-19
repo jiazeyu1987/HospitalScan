@@ -23,9 +23,9 @@ import {
 } from 'antd'
 import {
   PlayCircleOutlined,
-  StopCircleOutlined,
+  StopOutlined,
   ReloadOutlined,
-  LogOutlined,
+  FileTextOutlined,
   CheckCircleOutlined,
   ExclamationCircleOutlined,
   CloseCircleOutlined,
@@ -174,7 +174,7 @@ const CrawlerDashboard: React.FC = () => {
       default:
         return {
           color: 'default',
-          icon: <StopCircleOutlined />,
+          icon: <StopOutlined />,
           text: '已停止',
           description: '爬虫已停止运行'
         }
@@ -310,7 +310,7 @@ const CrawlerDashboard: React.FC = () => {
             <Button
               danger
               size="large"
-              icon={<StopCircleOutlined />}
+              icon={<StopOutlined />}
               onClick={handleStopCrawler}
               disabled={status?.status !== 'running'}
               loading={loading}
@@ -357,7 +357,7 @@ const CrawlerDashboard: React.FC = () => {
             <Statistic
               title="日志总数"
               value={totalLogs}
-              prefix={<LogOutlined />}
+              prefix={<FileTextOutlined />}
             />
           </Card>
         </Col>
@@ -379,7 +379,7 @@ const CrawlerDashboard: React.FC = () => {
         title={
           <div className="flex items-center justify-between">
             <Space>
-              <LogOutlined />
+              <FileTextOutlined />
               <Text>实时日志</Text>
             </Space>
             <Select
@@ -405,19 +405,18 @@ const CrawlerDashboard: React.FC = () => {
             </div>
           ) : logs.length === 0 ? (
             <div className="text-center py-8">
-              <LogOutlined className="text-4xl text-gray-300 mb-4" />
+              <FileTextOutlined className="text-4xl text-gray-300 mb-4" />
               <Text type="secondary">暂无日志记录</Text>
             </div>
           ) : (
-            <Timeline>
-              {logs.map((log) => {
+            <Timeline
+              items={logs.map((log) => {
                 const levelConfig = getLogLevelConfig(log.level)
-                return (
-                  <Timeline.Item
-                    key={log.id}
-                    dot={levelConfig.icon}
-                    color={levelConfig.color}
-                  >
+                return {
+                  key: log.id,
+                  dot: levelConfig.icon,
+                  color: levelConfig.color,
+                  children: (
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
@@ -436,10 +435,10 @@ const CrawlerDashboard: React.FC = () => {
                         <Text>{log.message}</Text>
                       </div>
                     </div>
-                  </Timeline.Item>
-                )
+                  )
+                }
               })}
-            </Timeline>
+            />
           )}
         </div>
       </Card>

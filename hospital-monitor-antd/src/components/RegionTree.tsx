@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Tree, Spin, Input, Badge, Button, Space, message } from 'antd'
 import { 
   EnvironmentOutlined, 
-  HospitalOutlined, 
+  MedicineBoxOutlined, 
   SearchOutlined,
   ReloadOutlined,
   PlusOutlined,
@@ -83,7 +83,7 @@ const RegionTree: React.FC<RegionTreeProps> = ({
   const renderTreeTitle = (region: Region) => {
     const isHospital = region.level === 4
     const icon = isHospital ? 
-      <HospitalOutlined className="text-blue-500" /> : 
+      <MedicineBoxOutlined className="text-blue-500" /> : 
       <EnvironmentOutlined className="text-green-500" />
 
     return (

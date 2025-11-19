@@ -9,6 +9,7 @@
 """
 
 from flask import request, current_app
+from datetime import datetime
 from app.api import bp
 from app.services.crawler_manager import crawler_manager
 from app.utils.response import success_response, error_response
@@ -125,19 +126,48 @@ def stop_crawler_task(task_id):
         current_app.logger.error(f'停止爬虫任务失败: {str(e)}')
         return error_response('停止任务失败', 500)
 
+@bp.route('/crawler/status', methods=['GET'])
+def crawler_status():
+    """获取爬虫系统状态"""
+
+    try:
+        all_tasks = crawler_manager.get_all_tasks()
+        running_tasks = crawler_manager.get_running_tasks()
+
+        # 计算状态统计
+        status_counts = {}
+        for task in all_tasks:
+            status = task.status.value
+            status_counts[status] = status_counts.get(status, 0) + 1
+
+        return success_response({
+            'system_status': 'running' if running_tasks else 'idle',
+            'total_tasks': len(all_tasks),
+            'running_tasks': len(running_tasks),
+            'completed_tasks': status_counts.get('completed', 0),
+            'failed_tasks': status_counts.get('failed', 0),
+            'pending_tasks': status_counts.get('pending', 0),
+            'status_breakdown': status_counts,
+            'last_update': datetime.now().isoformat()
+        })
+
+    except Exception as e:
+        current_app.logger.error(f'获取爬虫状态失败: {str(e)}')
+        return error_response('获取爬虫状态失败', 500)
+
 @bp.route('/crawler/health', methods=['GET'])
 def crawler_health():
     """爬虫系统健康检查"""
-    
+
     try:
         running_tasks = crawler_manager.get_running_tasks()
-        
+
         return success_response({
             'status': 'healthy',
             'message': '爬虫系统运行正常',
             'running_tasks_count': len(running_tasks)
         })
-        
+
     except Exception as e:
         current_app.logger.error(f'爬虫健康检查失败: {str(e)}')
         return error_response('爬虫系统异常', 500)

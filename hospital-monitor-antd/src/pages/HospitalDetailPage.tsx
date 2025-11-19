@@ -33,7 +33,7 @@ import {
   UserOutlined,
   FileTextOutlined,
   ClockCircleOutlined,
-  TrendingUpOutlined,
+  RiseOutlined,
   BarChartOutlined
 } from '@ant-design/icons'
 
@@ -124,21 +124,8 @@ const HospitalDetailPage: React.FC<HospitalDetailProps> = ({ mode = 'view' }) =>
     }
     return config[status as keyof typeof config] || config.failed
   }
-      tenders_found: 0,
-      duration: '30秒',
-      notes: '网站响应超时'
-    }
-  ]
 
-  const getScanStatusConfig = (status: string) => {
-    const config = {
-      success: { color: 'green', text: '成功' },
-      error: { color: 'red', text: '失败' },
-      warning: { color: 'orange', text: '警告' }
-    }
-    return config[status as keyof typeof config]
-  }
-
+  
   if (!currentHospital) {
     return (
       <div className="text-center py-8">
@@ -297,7 +284,7 @@ const HospitalDetailPage: React.FC<HospitalDetailProps> = ({ mode = 'view' }) =>
                   value={((currentHospital.scan_success_count || 0) / Math.max((currentHospital.scan_success_count || 0) + (currentHospital.scan_failed_count || 0), 1)) * 100}
                   suffix="%"
                   precision={1}
-                  prefix={<TrendingUpOutlined />}
+                  prefix={<RiseOutlined />}
                   valueStyle={{ color: '#52c41a' }}
                 />
               </Col>
@@ -380,40 +367,41 @@ const HospitalDetailPage: React.FC<HospitalDetailProps> = ({ mode = 'view' }) =>
             } 
             key="scan_history"
           >
-            <Timeline>
-              {scanHistory.map((scan) => {
+            <Timeline
+              items={scanHistory.map((scan) => {
                 const statusConfig = getScanStatusConfig(scan.status)
-                return (
-                  <Timeline.Item
-                    key={scan.id}
-                    color={statusConfig.color}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <Text strong>扫描时间: {scan.scan_time}</Text>
-                        <span className="mx-2">•</span>
-                        <Text>耗时: {scan.duration}</Text>
-                      </div>
-                      <Badge
-                        status={statusConfig.color as any}
-                        text={statusConfig.text}
-                      />
-                    </div>
-                    <Paragraph className="text-sm mb-0">
-                      <Text>发现 {scan.tenders_found} 条招投标信息</Text>
-                      <span className="mx-2">•</span>
-                      <Text type="secondary">耗时 {Math.round(scan.response_time)}秒</Text>
-                      {scan.error_message && (
-                        <>
+                return {
+                  key: scan.id,
+                  color: statusConfig.color,
+                  children: (
+                    <>
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <Text strong>扫描时间: {scan.scan_time}</Text>
                           <span className="mx-2">•</span>
-                          <Text type="danger">{scan.error_message}</Text>
-                        </>
-                      )}
-                    </Paragraph>
-                  </Timeline.Item>
-                )
+                          <Text>耗时: {scan.duration}</Text>
+                        </div>
+                        <Badge
+                          status={statusConfig.color as any}
+                          text={statusConfig.text}
+                        />
+                      </div>
+                      <Paragraph className="text-sm mb-0">
+                        <Text>发现 {scan.tenders_found} 条招投标信息</Text>
+                        <span className="mx-2">•</span>
+                        <Text type="secondary">耗时 {Math.round(scan.response_time)}秒</Text>
+                        {scan.error_message && (
+                          <>
+                            <span className="mx-2">•</span>
+                            <Text type="danger">{scan.error_message}</Text>
+                          </>
+                        )}
+                      </Paragraph>
+                    </>
+                  )
+                }
               })}
-            </Timeline>
+            />
           </TabPane>
 
           <TabPane 
@@ -425,47 +413,58 @@ const HospitalDetailPage: React.FC<HospitalDetailProps> = ({ mode = 'view' }) =>
             } 
             key="logs"
           >
-            <Timeline>
-              <Timeline.Item color="blue">
-                <div>
-                  <Text strong>手动编辑</Text>
-                  <div className="text-xs text-gray-500">2024-11-18 10:30:00</div>
-                </div>
-                <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
-                  更新医院基本信息
-                </Paragraph>
-              </Timeline.Item>
-
-              <Timeline.Item color="green">
-                <div>
-                  <Text strong>官网扫描</Text>
-                  <div className="text-xs text-gray-500">2024-11-18 02:30:15</div>
-                </div>
-                <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
-                  成功获取5条招投标信息
-                </Paragraph>
-              </Timeline.Item>
-
-              <Timeline.Item color="orange">
-                <div>
-                  <Text strong>系统更新</Text>
-                  <div className="text-xs text-gray-500">2024-11-17 15:45:22</div>
-                </div>
-                <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
-                  标记为重要医院
-                </Paragraph>
-              </Timeline.Item>
-
-              <Timeline.Item color="blue">
-                <div>
-                  <Text strong>数据验证</Text>
-                  <div className="text-xs text-gray-500">2024-11-16 09:15:33</div>
-                </div>
-                <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
-                  验证医院信息真实性
-                </Paragraph>
-              </Timeline.Item>
-            </Timeline>
+            <Timeline
+              items={[
+                {
+                  color: 'blue',
+                  children: (
+                    <div>
+                      <Text strong>手动编辑</Text>
+                      <div className="text-xs text-gray-500">2024-11-18 10:30:00</div>
+                      <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
+                        更新医院基本信息
+                      </Paragraph>
+                    </div>
+                  )
+                },
+                {
+                  color: 'green',
+                  children: (
+                    <div>
+                      <Text strong>官网扫描</Text>
+                      <div className="text-xs text-gray-500">2024-11-18 02:30:15</div>
+                      <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
+                        成功获取5条招投标信息
+                      </Paragraph>
+                    </div>
+                  )
+                },
+                {
+                  color: 'orange',
+                  children: (
+                    <div>
+                      <Text strong>系统更新</Text>
+                      <div className="text-xs text-gray-500">2024-11-17 15:45:22</div>
+                      <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
+                        标记为重要医院
+                      </Paragraph>
+                    </div>
+                  )
+                },
+                {
+                  color: 'blue',
+                  children: (
+                    <div>
+                      <Text strong>数据验证</Text>
+                      <div className="text-xs text-gray-500">2024-11-16 09:15:33</div>
+                      <Paragraph className="text-sm mt-1" ellipsis={{ rows: 1 }}>
+                        验证医院信息真实性
+                      </Paragraph>
+                    </div>
+                  )
+                }
+              ]}
+            />
           </TabPane>
         </Tabs>
       </Card>

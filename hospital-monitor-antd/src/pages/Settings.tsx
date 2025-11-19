@@ -23,7 +23,7 @@ import {
 import {
   SaveOutlined,
   ReloadOutlined,
-  TestTubeOutlined,
+  ExperimentOutlined,
   SettingOutlined,
   NotificationOutlined,
   DatabaseOutlined,
@@ -393,7 +393,7 @@ const Settings: React.FC = () => {
                 <Col span={12}>
                   <Button
                     type="dashed"
-                    icon={<TestTubeOutlined />}
+                    icon={<ExperimentOutlined />}
                     onClick={handleTestEmail}
                     disabled={!form.getFieldValue('notification')?.email_enabled}
                   >
@@ -468,7 +468,7 @@ const Settings: React.FC = () => {
                 <Col span={12}>
                   <Button
                     type="dashed"
-                    icon={<TestTubeOutlined />}
+                    icon={<ExperimentOutlined />}
                     onClick={handleTestSms}
                     disabled={!form.getFieldValue('notification')?.sms_enabled}
                   >

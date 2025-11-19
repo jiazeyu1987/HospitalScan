@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, Form, Input, Button, Typography, Alert, Space } from 'antd'
-import { UserOutlined, LockOutlined, HospitalOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, MedicineBoxOutlined } from '@ant-design/icons'
 import { message } from 'antd'
 import type { LoginForm } from '../types'
 
@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
         <div className="text-center">
           <div className="flex justify-center">
             <div className="h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center">
-              <HospitalOutlined className="h-8 w-8 text-white" />
+              <MedicineBoxOutlined className="h-8 w-8 text-white" />
             </div>
           </div>
           <Title level={2} className="mt-6 text-gray-900">

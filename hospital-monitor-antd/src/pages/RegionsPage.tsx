@@ -16,7 +16,7 @@ import {
 } from 'antd'
 import {
   EnvironmentOutlined,
-  HospitalOutlined,
+  MedicineBoxOutlined,
   FileTextOutlined,
   ReloadOutlined,
   BarChartOutlined
@@ -100,7 +100,7 @@ const RegionsPage: React.FC = () => {
             <Statistic
               title="医院总数"
               value={stats.totalHospitals}
-              prefix={<HospitalOutlined />}
+              prefix={<MedicineBoxOutlined />}
               valueStyle={{ color: '#52c41a' }}
             />
           </Card>
@@ -197,7 +197,7 @@ const RegionsPage: React.FC = () => {
                         ]}
                       >
                         <List.Item.Meta
-                          avatar={<HospitalOutlined className="text-blue-500" />}
+                          avatar={<MedicineBoxOutlined className="text-blue-500" />}
                           title={
                             <Space>
                               {hospital.name}

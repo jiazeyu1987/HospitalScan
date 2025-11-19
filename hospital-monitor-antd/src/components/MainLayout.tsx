@@ -16,7 +16,7 @@ import {
   MenuUnfoldOutlined,
   DashboardOutlined,
   EnvironmentOutlined,
-  HospitalOutlined,
+  MedicineBoxOutlined,
   FileTextOutlined,
   ScheduleOutlined,
   BarChartOutlined,
@@ -26,7 +26,7 @@ import {
   BellOutlined,
   ToolOutlined,
   PlayCircleOutlined,
-  StopCircleOutlined
+  StopOutlined
 } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 
@@ -51,7 +51,7 @@ const menuItems: MenuProps['items'] = [
   },
   {
     key: '/hospitals',
-    icon: <HospitalOutlined />,
+    icon: <MedicineBoxOutlined />,
     label: '医院管理'
   },
   {
@@ -93,19 +93,19 @@ const CrawlerStatusIndicator: React.FC<{ status?: CrawlerStatus }> = ({ status }
         return {
           color: 'error',
           text: '错误',
-          icon: <StopCircleOutlined />
+          icon: <StopOutlined />
         }
       case 'stopped':
         return {
           color: 'default',
           text: '已停止',
-          icon: <StopCircleOutlined />
+          icon: <StopOutlined />
         }
       default:
         return {
           color: 'default',
           text: '未知',
-          icon: <StopCircleOutlined />
+          icon: <StopOutlined />
         }
     }
   }
@@ -218,10 +218,10 @@ const CustomSidebar: React.FC<{
       {/* Logo */}
       <div className="flex items-center justify-center h-16 border-b border-gray-200">
         {collapsed ? (
-          <HospitalOutlined className="text-2xl text-blue-600" />
+          <MedicineBoxOutlined className="text-2xl text-blue-600" />
         ) : (
           <div className="flex items-center space-x-2">
-            <HospitalOutlined className="text-2xl text-blue-600" />
+            <MedicineBoxOutlined className="text-2xl text-blue-600" />
             <span className="text-lg font-semibold text-gray-800">医院监控系统</span>
           </div>
         )}

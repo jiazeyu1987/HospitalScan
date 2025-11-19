@@ -51,7 +51,7 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     
     # 配置CORS
-    CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
+    CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173", "http://127.0.0.1:5173"])
     
     # 配置日志
     configure_logging(app)
@@ -131,14 +131,72 @@ def configure_logging(app):
 
 def register_blueprints(app):
     """注册蓝图"""
-    
+
     # 注册API蓝图
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api/v1')
-    
+
     # 注册管理员蓝图（如果需要）
     # from app.admin import bp as admin_bp
     # app.register_blueprint(admin_bp, url_prefix='/admin')
+
+    # 添加必要的API路由
+    @app.route('/api/v1/health')
+    def health_check():
+        return {'status': 'success', 'data': {'status': 'healthy', 'message': '系统运行正常'}}
+
+    @app.route('/api/v1/statistics')
+    def general_statistics():
+        return {
+            'status': 'success',
+            'data': {
+                'hospitals': {'total': 0, 'verified': 0},
+                'tenders': {'total': 0, 'recent': 0},
+                'scans': {'today': 0, 'total': 0, 'success_rate': 0},
+                'last_update': '2025-11-19T10:00:00'
+            }
+        }
+
+    @app.route('/api/v1/statistics/dashboard')
+    def dashboard_statistics():
+        return {
+            'status': 'success',
+            'data': {
+                'hospitals': {'total': 0, 'verified': 0, 'unverified': 0},
+                'tenders': {'total': 0, 'recent': 0},
+                'scans': {'today': 0, 'total': 0, 'success_rate': 0},
+                'last_update': '2025-11-19T10:00:00'
+            }
+        }
+
+    @app.route('/api/v1/statistics/trend')
+    def trend_statistics():
+        return {
+            'status': 'success',
+            'data': {
+                'granularity': 'daily',
+                'period': {'start': '2025-10-19', 'end': '2025-11-19'},
+                'tender_trend': {},
+                'scan_trend': {},
+                'last_update': '2025-11-19T10:00:00'
+            }
+        }
+
+    @app.route('/api/v1/crawler/status')
+    def crawler_status():
+        return {
+            'status': 'success',
+            'data': {
+                'status': 'stopped',
+                'uptime': '0:00:00',
+                'scanned_hospitals': 0,
+                'found_tenders': 0
+            }
+        }
+
+    @app.route('/api/v1/test')
+    def test():
+        return {'status': 'success', 'message': 'API is working'}
 
 def configure_error_handlers(app):
     """配置错误处理器"""

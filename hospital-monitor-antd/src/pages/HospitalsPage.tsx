@@ -234,7 +234,7 @@ const HospitalsPage: React.FC = () => {
                 danger
                 icon={<DeleteOutlined />}
               />
-            </Button>
+            </Tooltip>
           </Popconfirm>
         </Space>
       )

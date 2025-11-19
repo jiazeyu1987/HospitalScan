@@ -19,8 +19,8 @@ import {
   LineChartOutlined,
   PieChartOutlined,
   ReloadOutlined,
-  TrendingUpOutlined,
-  TrendingDownOutlined,
+  RiseOutlined,
+  FallOutlined,
   ExportOutlined
 } from '@ant-design/icons'
 import {
@@ -182,7 +182,7 @@ const StatisticsPage: React.FC = () => {
               suffix={
                 <Tooltip title="相比上周">
                   <span className="text-sm">
-                    <TrendingUpOutlined style={{ color: '#52c41a' }} /> +2.5%
+                    <RiseOutlined style={{ color: '#52c41a' }} /> +2.5%
                   </span>
                 </Tooltip>
               }
@@ -200,7 +200,7 @@ const StatisticsPage: React.FC = () => {
               suffix={
                 <Tooltip title="相比上月">
                   <span className="text-sm">
-                    <TrendingUpOutlined style={{ color: '#52c41a' }} /> +15.2%
+                    <RiseOutlined style={{ color: '#52c41a' }} /> +15.2%
                   </span>
                 </Tooltip>
               }
@@ -219,7 +219,7 @@ const StatisticsPage: React.FC = () => {
               suffix={
                 <Tooltip title="相比上周">
                   <span className="text-sm">
-                    <TrendingUpOutlined style={{ color: '#52c41a' }} /> +8.7%
+                    <RiseOutlined style={{ color: '#52c41a' }} /> +8.7%
                   </span>
                 </Tooltip>
               }
@@ -238,7 +238,7 @@ const StatisticsPage: React.FC = () => {
               suffix={
                 <Tooltip title="相比上周">
                   <span className="text-sm">
-                    <TrendingUpOutlined style={{ color: '#52c41a' }} /> +1.2%
+                    <RiseOutlined style={{ color: '#52c41a' }} /> +1.2%
                   </span>
                 </Tooltip>
               }

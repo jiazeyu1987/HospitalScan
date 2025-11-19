@@ -367,37 +367,46 @@ const SchedulerPage: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={12}>
           <Card title="最近执行记录">
-            <Timeline>
-              <Timeline.Item color="green">
-                <div>
-                  <Text strong>每日医院扫描</Text>
-                  <div className="text-xs text-gray-500">2024-11-18 02:00:00</div>
-                </div>
-                <div className="text-sm mt-1">
-                  成功扫描 145/150 家医院，耗时 23 分钟
-                </div>
-              </Timeline.Item>
-
-              <Timeline.Item color="blue">
-                <div>
-                  <Text strong>周度重点医院扫描</Text>
-                  <div className="text-xs text-gray-500">2024-11-18 03:00:00</div>
-                </div>
-                <div className="text-sm mt-1">
-                  成功扫描 48/50 家医院，耗时 12 分钟
-                </div>
-              </Timeline.Item>
-
-              <Timeline.Item color="orange">
-                <div>
-                  <Text strong>月度数据清理</Text>
-                  <div className="text-xs text-gray-500">2024-11-01 01:00:00</div>
-                </div>
-                <div className="text-sm mt-1">
-                  清理过期日志 1,234 条，清理招投标数据 567 条
-                </div>
-              </Timeline.Item>
-            </Timeline>
+            <Timeline
+              items={[
+                {
+                  color: 'green',
+                  children: (
+                    <div>
+                      <Text strong>每日医院扫描</Text>
+                      <div className="text-xs text-gray-500">2024-11-18 02:00:00</div>
+                      <div className="text-sm mt-1">
+                        成功扫描 145/150 家医院，耗时 23 分钟
+                      </div>
+                    </div>
+                  )
+                },
+                {
+                  color: 'blue',
+                  children: (
+                    <div>
+                      <Text strong>周度重点医院扫描</Text>
+                      <div className="text-xs text-gray-500">2024-11-18 03:00:00</div>
+                      <div className="text-sm mt-1">
+                        成功扫描 48/50 家医院，耗时 12 分钟
+                      </div>
+                    </div>
+                  )
+                },
+                {
+                  color: 'orange',
+                  children: (
+                    <div>
+                      <Text strong>月度数据清理</Text>
+                      <div className="text-xs text-gray-500">2024-11-01 01:00:00</div>
+                      <div className="text-sm mt-1">
+                        清理过期日志 1,234 条，清理招投标数据 567 条
+                      </div>
+                    </div>
+                  )
+                }
+              ]}
+            />
           </Card>
         </Col>
 
